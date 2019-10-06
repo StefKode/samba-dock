@@ -3,4 +3,4 @@
     path = /srv/VideoE
     guest ok = no
     browseable = yes
-    users = famkoch
+    users = fameltern

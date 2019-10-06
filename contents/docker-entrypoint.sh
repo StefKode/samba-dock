@@ -3,5 +3,5 @@
 /etc/init.d/nmbd start
 while [ 1 ];
 do
-	sleep 5
+	sleep 60
 done
