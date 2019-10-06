@@ -4,26 +4,17 @@ BTPL=$1
 shift
 BLDDIR=$1
 shift
-CTPL=$1
-shift
 IMGNAME=$1
 shift
 IMGVERS=$1
-shift
-COMPOSE=$1
 
 if [ "$1" = "" ]; then
 	echo "need btpl builddir ctmpl imgname imgvers composefile"
 	exit 1
 fi
 
-if [ ! -e "$CTPL" ]; then
-	echo "dockerfile template does not exist"
-	exit 1
-fi
-
-if [ ! -e "$CTPL" ]; then
-	echo "compose template does not exist"
+if [ ! -e "$BTPL" ]; then
+	echo "docker file template does not exist"
 	exit 1
 fi
 
@@ -31,7 +22,6 @@ if [ ! -d "$BLDDIR" ]; then
 	echo "build dir does not exist"
 	exit 1
 fi
-
 
 read -s -p "provide fameltern password: " pass1
 echo ""
@@ -46,8 +36,5 @@ fi
 cp -f "$BTPL" "$BLDDIR/Dockerfile"
 sed -i "s/%passwd%/$pass1/g"  "$BLDDIR/Dockerfile"
 chmod go-r "$BLDDIR/Dockerfile"
-
-cp -f "$CTPL" "$COMPOSE"
-sed -i "s/%imgname%/$IMGNAME:$IMGVERS/g"  "$COMPOSE"
 
 echo "done"

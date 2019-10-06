@@ -1,0 +1,24 @@
+#!/bin/bash
+
+CTPL=$1
+shift
+IMGNAME=$1
+shift
+IMGVERS=$1
+shift
+COMPOSE=$1
+
+if [ "$1" = "" ]; then
+	echo "need ctmpl imgname imgvers composefile"
+	exit 1
+fi
+
+if [ ! -e "$CTPL" ]; then
+	echo "compose template does not exist"
+	exit 1
+fi
+
+cp -f "$CTPL" "$COMPOSE"
+sed -i "s/%imgname%/$IMGNAME:$IMGVERS/g"  "$COMPOSE"
+
+echo "done"
