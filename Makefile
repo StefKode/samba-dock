@@ -18,7 +18,7 @@ files:	$(DFILE) $(CFILE) $(SMBCF)
 $(DFILE): $(DTPL) vars.env
 	tool/create_dfile $(DTPL) $(BLDDIR) $(USER_NAME)
 
-$(CFILE): $(CTPL)
+$(CFILE): $(CTPL) vars.env
 	tool/create_cfile $(CTPL) $(IMAGE_NAME) $(VERSION) $(CFILE) $(VOL_SRC) $(VOL_DEST) $(HOSTNAME)
 
 $(SMBCF): vars.env 
