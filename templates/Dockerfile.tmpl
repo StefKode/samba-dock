@@ -5,11 +5,11 @@ ADD ./docker-entrypoint.sh /
 RUN apt-get update && apt-get install -y \
   samba
 
-RUN useradd -m -p "$6$U6o31ZU.Ye$qhNJOpmIbBLPgMuz/FDHqrxZyaKtlBHBuhMXLOPLfLbjSfTnldCh8tfC9p64JXMM83WhdeIAJXAEhgNE/ZkPP." -s /bin/bash fameltern
+RUN useradd -m -p "%passhash%" -s /bin/bash %username%
 
 ADD smb.conf.part /tmp
 RUN cat /tmp/smb.conf.part >> /etc/samba/smb.conf
-RUN (echo "%passwd%"; echo "%passwd%") | smbpasswd -s -a fameltern
+RUN (echo "%passwd%"; echo "%passwd%") | smbpasswd -s -a %username%
 
 EXPOSE 445
 

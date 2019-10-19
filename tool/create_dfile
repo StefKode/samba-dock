@@ -4,12 +4,10 @@ BTPL=$1
 shift
 BLDDIR=$1
 shift
-IMGNAME=$1
-shift
-IMGVERS=$1
+USERN=$1
 
 if [ "$1" = "" ]; then
-	echo "need btpl builddir ctmpl imgname imgvers composefile"
+	echo "need btpl builddir user"
 	exit 1
 fi
 
@@ -23,9 +21,9 @@ if [ ! -d "$BLDDIR" ]; then
 	exit 1
 fi
 
-read -s -p "provide fameltern password: " pass1
+read -s -p "provide $USERN password: " pass1
 echo ""
-read -s -p "repeat  fameltern password: " pass2
+read -s -p "repeat  $USERN password: " pass2
 echo ""
 
 if [ "$pass1" != "$pass2" ]; then
@@ -33,8 +31,11 @@ if [ "$pass1" != "$pass2" ]; then
 	exit 1
 fi
 
+hash=$(echo "$pass1" | mkpasswd -m sha-512 -s | sed -e 's/\//\\\//g' -e 's/\$/\\$/g')
+
 cp -f "$BTPL" "$BLDDIR/Dockerfile"
-sed -i "s/%passwd%/$pass1/g"  "$BLDDIR/Dockerfile"
+sed -i "s/%passwd%/$pass1/g"   "$BLDDIR/Dockerfile"
+sed -i "s/%username%/$USERN/g" "$BLDDIR/Dockerfile"
+sed -i "s/%passhash%/$hash/g"  "$BLDDIR/Dockerfile"
 chmod go-r "$BLDDIR/Dockerfile"
 
-echo "done"

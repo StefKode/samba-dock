@@ -1,2 +1,4 @@
 build/Dockerfile
 docker-compose.yml
+vars.env
+contents/smb.conf.part

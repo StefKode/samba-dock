@@ -1,0 +1,31 @@
+#!/bin/bash
+
+OUT=$1
+shift
+SMBEXPORT=$1
+shift
+COMMENT=$1
+shift
+EXPDIR=$1
+shift
+USERN=$1
+
+if [ "$1" = "" ]; then
+	echo "need outfile smbexport-name comment export-dir user-name"
+	exit 1
+fi
+
+if [ ! -d "$(dirname $OUT)" ]; then
+	echo "content-dir dir does not exist"
+	exit 1
+fi
+
+cat > "$OUT" << END
+[$SMBEXPORT]
+    comment = "$COMMENT"
+    path = $EXPDIR
+    guest ok = no
+    browseable = yes
+    users = $USERN
+END
+

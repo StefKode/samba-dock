@@ -2,14 +2,20 @@
 
 CTPL=$1
 shift
-IMGNAME=$1
+IMGNAME=$(echo $1 | sed -e 's/\//\\\//')
 shift
-IMGVERS=$1
+IMGVERS=$(echo $1 | sed -e 's/\//\\\//')
 shift
-COMPOSE=$1
+COMPOSE=$(echo $1 | sed -e 's/\//\\\//')
+shift
+VOLSRC=$(echo $1 | sed -e 's/\//\\\//')
+shift
+VOLDST=$(echo $1 | sed -e 's/\//\\\//')
+shift
+HNAME=$1
 
 if [ "$1" = "" ]; then
-	echo "need ctmpl imgname imgvers composefile"
+	echo "need ctmpl imgname imgvers composefile vol-src vol-dest host-name"
 	exit 1
 fi
 
@@ -20,5 +26,6 @@ fi
 
 cp -f "$CTPL" "$COMPOSE"
 sed -i "s/%imgname%/$IMGNAME:$IMGVERS/g"  "$COMPOSE"
-
-echo "done"
+sed -i "s/%volsrc%/$VOLSRC/g"  "$COMPOSE"
+sed -i "s/%voldst%/$VOLDST/g"  "$COMPOSE"
+sed -i "s/%hostname%/$HNAME/g" "$COMPOSE"

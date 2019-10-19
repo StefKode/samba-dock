@@ -1,6 +1,0 @@
-[videoE]
-    comment = SCK-NAS
-    path = /srv/VideoE
-    guest ok = no
-    browseable = yes
-    users = fameltern

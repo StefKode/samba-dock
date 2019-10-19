@@ -2,7 +2,7 @@
 version: '2.4'
 services:
   samba:
-    hostname: medium
+    hostname: %hostname%
     image: %imgname%
     ports:
       - "137:137/udp"
@@ -17,7 +17,7 @@ services:
     tty: true
     volumes:
       - type: bind
-        source: /srv
-        target: /srv
+        source: %volsrc%
+        target: %voldst%
 networks:
   default:
